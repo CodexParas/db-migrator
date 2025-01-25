@@ -12,8 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import static com.paras.db_migrator.constants.BeanName.*;
-import static com.paras.db_migrator.constants.Constants.recordCount;
-import static com.paras.db_migrator.constants.Constants.timestamp;
+import static com.paras.db_migrator.constants.Constants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -24,39 +23,39 @@ public class DataServiceImpl implements DataService {
     @Override
     @SneakyThrows
     public ResponseEntity<ResponseDTO> insertDataToMySql(DataInsertRequestDTO dataInsertRequestDTO) {
-        JobParameters params = new JobParametersBuilder().addLong(timestamp.name(), System.currentTimeMillis())
+        JobParameters params = new JobParametersBuilder().addLong(timestamp, System.currentTimeMillis())
                                                          .addString(
-                                                                 recordCount.name(),
+                                                                 recordCount,
                                                                  dataInsertRequestDTO.count().toString())
                                                          .toJobParameters();
         beanSupplier.getJobLauncherBean(MYSQL_JOB_LAUNCHER).run(beanSupplier.getJobBean(MYSQL_DATA_INSERT_JOB), params);
-        return ResponseEntity.ok(ResponseDTO.success("Data Inserted Successfully", null));
+        return ResponseEntity.ok(ResponseDTO.success(DATA_INSERTED, null));
     }
 
     @Override
     @SneakyThrows
     public ResponseEntity<ResponseDTO> insertDataToPostgres(DataInsertRequestDTO dataInsertRequestDTO) {
-        JobParameters params = new JobParametersBuilder().addLong(timestamp.name(), System.currentTimeMillis())
+        JobParameters params = new JobParametersBuilder().addLong(timestamp, System.currentTimeMillis())
                                                          .addString(
-                                                                 recordCount.name(),
+                                                                 recordCount,
                                                                  dataInsertRequestDTO.count().toString())
                                                          .toJobParameters();
         beanSupplier.getJobLauncherBean(POSTGRES_JOB_LAUNCHER)
                     .run(beanSupplier.getJobBean(POSTGRES_DATA_INSERT_JOB), params);
-        return ResponseEntity.ok(ResponseDTO.success("Data Inserted Successfully", null));
+        return ResponseEntity.ok(ResponseDTO.success(DATA_INSERTED, null));
     }
 
     @Override
     @SneakyThrows
     public ResponseEntity<ResponseDTO> insertDataToOracle(DataInsertRequestDTO dataInsertRequestDTO) {
-        JobParameters params = new JobParametersBuilder().addLong(timestamp.name(), System.currentTimeMillis())
+        JobParameters params = new JobParametersBuilder().addLong(timestamp, System.currentTimeMillis())
                                                          .addString(
-                                                                 recordCount.name(),
+                                                                 recordCount,
                                                                  dataInsertRequestDTO.count().toString())
                                                          .toJobParameters();
         beanSupplier.getJobLauncherBean(ORACLE_JOB_LAUNCHER)
                     .run(beanSupplier.getJobBean(ORACLE_DATA_INSERT_JOB), params);
-        return ResponseEntity.ok(ResponseDTO.success("Data Inserted Successfully", null));
+        return ResponseEntity.ok(ResponseDTO.success(DATA_INSERTED, null));
     }
 
     @Override
@@ -64,6 +63,6 @@ public class DataServiceImpl implements DataService {
         insertDataToMySql(dataInsertRequestDTO);
         insertDataToPostgres(dataInsertRequestDTO);
         insertDataToOracle(dataInsertRequestDTO);
-        return ResponseEntity.ok(ResponseDTO.success("Data Inserted Successfully", null));
+        return ResponseEntity.ok(ResponseDTO.success(DATA_INSERTED, null));
     }
 }
