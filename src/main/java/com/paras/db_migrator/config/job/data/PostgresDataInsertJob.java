@@ -1,5 +1,6 @@
-package com.paras.db_migrator.config.job;
+package com.paras.db_migrator.config.job.data;
 
+import com.paras.db_migrator.config.job.JobListener;
 import com.paras.db_migrator.entity.postgres.PostgresClientEntity;
 import com.paras.db_migrator.generator.MockDataGenerator;
 import com.paras.db_migrator.repository.postgres.PostgresClientRepository;
@@ -24,7 +25,7 @@ import java.util.Optional;
 
 @Configuration
 @RequiredArgsConstructor
-public class PostgresBatchJobConfig {
+public class PostgresDataInsertJob {
 
     private final MockDataGenerator mockDataGenerator;
     private final PostgresClientRepository postgreSqlClientRepository;
@@ -45,7 +46,7 @@ public class PostgresBatchJobConfig {
                 "postgres-step",
                                postgreSqlJobRepository).<PostgresClientEntity, PostgresClientEntity>chunk(
                                                                100, postgreSqlTransactionManager)
-                                                       .reader(postgresMockDataReader(null))
+                                                       .reader(postgresMockDataReader("10"))
                                                        .processor(postgresMockDataProcessor())
                                                        .writer(postgresMockDataWriter())
                                                        .transactionManager(postgreSqlTransactionManager)

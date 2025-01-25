@@ -1,5 +1,6 @@
-package com.paras.db_migrator.config.job;
+package com.paras.db_migrator.config.job.data;
 
+import com.paras.db_migrator.config.job.JobListener;
 import com.paras.db_migrator.entity.mysql.MySqlClientEntity;
 import com.paras.db_migrator.generator.MockDataGenerator;
 import com.paras.db_migrator.repository.mysql.MySqlClientRepository;
@@ -25,7 +26,7 @@ import java.util.Optional;
 
 @Configuration
 @RequiredArgsConstructor
-public class MySqlBatchJobConfig {
+public class MySqlDataInsertJob {
 
     private final MockDataGenerator mockDataGenerator;
     private final MySqlClientRepository mySqlClientRepository;
@@ -45,7 +46,7 @@ public class MySqlBatchJobConfig {
     public Step insertMySqlDataStep() {
         return new StepBuilder("mysql-step", mySqlJobRepository).<MySqlClientEntity, MySqlClientEntity>chunk(
                                                                         100, mySqlTransactionManager)
-                                                                .reader(mySqlMockDataReader(null))
+                                                                .reader(mySqlMockDataReader("10"))
                                                                 .processor(mySqlMockDataProcessor())
                                                                 .writer(mySqlMockDataWriter())
                                                                 .transactionManager(mySqlTransactionManager)

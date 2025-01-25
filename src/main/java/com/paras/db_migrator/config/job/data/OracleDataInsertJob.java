@@ -1,5 +1,6 @@
-package com.paras.db_migrator.config.job;
+package com.paras.db_migrator.config.job.data;
 
+import com.paras.db_migrator.config.job.JobListener;
 import com.paras.db_migrator.entity.oracle.OracleClientEntity;
 import com.paras.db_migrator.generator.MockDataGenerator;
 import com.paras.db_migrator.repository.oracle.OracleClientRepository;
@@ -24,7 +25,7 @@ import java.util.Optional;
 
 @Configuration
 @RequiredArgsConstructor
-public class OracleBatchJobConfig {
+public class OracleDataInsertJob {
 
     private final MockDataGenerator mockDataGenerator;
     private final OracleClientRepository oracleClientRepository;
@@ -41,7 +42,7 @@ public class OracleBatchJobConfig {
     public Step insertOracleStep() {
         return new StepBuilder("oracle-step", oracleJobRepository).<OracleClientEntity, OracleClientEntity>chunk(
                                                                           100, oracleTransactionManager)
-                                                                  .reader(oracleMockDataReader(null))
+                                                                  .reader(oracleMockDataReader("10"))
                                                                   .processor(oracleMockDataProcessor())
                                                                   .writer(oracleMockDataWriter())
                                                                   .transactionManager(oracleTransactionManager)
