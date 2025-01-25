@@ -1,4 +1,4 @@
-# DB Migrator
+# DB Migrator - Effortless database migration and batch processing across MySQL, PostgreSQL, and Oracle.
 
 This project is a DB Migrator that facilitates migrating data between different databases (MySQL, PostgreSQL, Oracle).
 It leverages Spring Boot with Spring Batch for executing database migrations and inserting demo data into various
