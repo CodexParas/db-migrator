@@ -1,1 +1,35 @@
-spring.application.name=DB Migrator
+server:
+  port: 9121
+  servlet:
+    context-path: /api
+spring:
+  application:
+    name: DB Migrator
+  datasource:
+    # PostgreSQL DB connection
+    postgres:
+      jdbcUrl: jdbc:postgresql://localhost:5434/db_migrator
+      username: postgres
+      password: postgres
+      driver-class-name: org.postgresql.Driver
+
+    # MySQL DB connection
+    mysql:
+      jdbcUrl: jdbc:mysql://localhost:3306/db_migrator
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # Oracle DB connection
+    oracle:
+      jdbcUrl: jdbc:oracle:thin:@//localhost:1521/dbmigrator
+      username: dbmigrator
+      password: dbmigrator
+      driver-class-name: oracle.jdbc.OracleDriver
+
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: ALWAYS
+      platform: mysql

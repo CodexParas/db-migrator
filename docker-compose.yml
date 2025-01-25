@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db_migrator
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_migrator
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command:
+      --default-authentication-plugin=mysql_native_password
+
+  oracle-db:
+    image: container-registry.oracle.com/database/free:latest-lite
+    container_name: oracle-db
+    ports:
+      - "1521:1521"
+    environment:
+      - ORACLE_PDB=dbmigrator
+      - ORACLE_PWD=oracle
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+      - ./create_user.sql:/opt/oracle/scripts/startup/create_user.sql
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  mysql_data:
+  oracle_data:
