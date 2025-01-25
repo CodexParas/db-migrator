@@ -1,6 +1,8 @@
 package com.paras.db_migrator.controller;
 
 import com.paras.db_migrator.dto.MigrateToMySqlDTO;
+import com.paras.db_migrator.dto.MigrateToOracleDTO;
+import com.paras.db_migrator.dto.MigrateToPostgresDTO;
 import com.paras.db_migrator.dto.ResponseDTO;
 import com.paras.db_migrator.service.MigrationService;
 import jakarta.validation.Valid;
@@ -24,28 +26,17 @@ public class MigrationController {
         return migrationService.migrateDataToMySql(request);
     }
 
-    @PostMapping("/postgresToMysql")
-    public ResponseEntity<ResponseDTO> migrateDataFromPostgresToMysql() {
-        return migrationService.migrateDataFromPostgresToMysql();
+    @PostMapping("/toPostgres")
+    public ResponseEntity<ResponseDTO> migrateDataToPostgres(
+            @Valid
+            MigrateToPostgresDTO request) {
+        return migrationService.migrateDataToPostgres(request);
     }
 
-    @PostMapping("/mysqlToOracle")
-    public ResponseEntity<ResponseDTO> migrateDataFromMysqlToOracle() {
-        return migrationService.migrateDataFromMysqlToOracle();
-    }
-
-    @PostMapping("/oracleToMysql")
-    public ResponseEntity<ResponseDTO> migrateDataFromOracleToMysql() {
-        return migrationService.migrateDataFromOracleToMysql();
-    }
-
-    @PostMapping("/postgresToOracle")
-    public ResponseEntity<ResponseDTO> migrateDataFromPostgresToOracle() {
-        return migrationService.migrateDataFromPostgresToOracle();
-    }
-
-    @PostMapping("/oracleToPostgres")
-    public ResponseEntity<ResponseDTO> migrateDataFromOracleToPostgres() {
-        return migrationService.migrateDataFromOracleToPostgres();
+    @PostMapping("/toOracle")
+    public ResponseEntity<ResponseDTO> migrateDataToOracle(
+            @Valid
+            MigrateToOracleDTO request) {
+        return migrationService.migrateDataToOracle(request);
     }
 }
