@@ -14,4 +14,8 @@ public class ResponseDTO {
     private String code;
     private String message;
     private Object response;
+
+    public static ResponseDTO success(String message, Object response) {
+        return ResponseDTO.builder().status("Success").code("200").message(message).response(response).build();
+    }
 }
