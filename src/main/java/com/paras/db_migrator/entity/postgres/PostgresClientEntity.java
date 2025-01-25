@@ -6,13 +6,11 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "client_data",
-       indexes = {@Index(name = "idx_client_id",
-                         columnList = "id")})
+@Table(name = "client_data", indexes = {@Index(name = "idx_client_id", columnList = "id")})
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class PostgresClientEntity {
