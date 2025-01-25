@@ -5,6 +5,7 @@ import com.paras.db_migrator.dto.MigrateToOracleDTO;
 import com.paras.db_migrator.dto.MigrateToPostgresDTO;
 import com.paras.db_migrator.dto.ResponseDTO;
 import com.paras.db_migrator.service.MigrationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/migrate")
+@Tag(name = "Migration", description = "APIs to migrate data from one database to another")
 public class MigrationController {
 
     private final MigrationService migrationService;
