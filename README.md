@@ -1,106 +1,231 @@
-# DB Migrator - Effortless database migration and batch processing across MySQL, PostgreSQL, and Oracle.
+# DB Migrator
 
-This project is a DB Migrator that facilitates migrating data between different databases (MySQL, PostgreSQL, Oracle).
-It leverages Spring Boot with Spring Batch for executing database migrations and inserting demo data into various
-databases. It exposes REST APIs for migration operations and data insertion.
+A Spring Boot-based tool for **migrating data between relational databases** (MySQL, PostgreSQL, Oracle) and generating
+mock datasets. Built with Spring Batch for robust, transactional workflows.
 
-## Features
+---
 
-- Migrate data between MySQL, PostgreSQL, and Oracle databases.
-- Insert demo data into different databases.
-- Configurable using Spring Batch jobs.
-- OpenAPI documentation for API endpoints.
+## 📌 Table of Contents
 
-## Requirements
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Local Setup](#local-setup)
+    - [Docker Setup](#docker-setup-optional)
+- [API Documentation](#-api-documentation)
+- [Workflow Details](#-workflow-details)
+    - [Data Migration](#data-migration-flow)
+    - [Data Insertion](#data-insertion-flow)
+- [Configuration](#-configuration)
+- [Roadmap](#-roadmap)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-- Java 21
-- Maven
-- Docker (Optional, for running database containers)
-- Databases: MySQL, PostgreSQL, Oracle (must be set up and running for migration)
+---
 
-## Setup
+## 🚀 Features
 
-### 1. Clone the repository
+- **Cross-Database Migration**: Move data between MySQL, PostgreSQL, and Oracle.
+- **Mock Data Generation**: Insert customizable test datasets into any supported database.
+- **Batch Processing**: Chunk-based (100 records/transaction) processing for large datasets.
+- **Multi-DB Configuration**: Isolated connection pools and JPA configurations for each database.
+- **REST API Integration**: Trigger operations via Swagger-documented endpoints.
 
-```bash
-git clone https://github.com/CodexParas/db-migrator.git
-cd db-migrator
-```
+---
 
-### 2. Install dependencies
+## 🛠️ Tech Stack
 
-Make sure you have Maven installed and run the following to install the project dependencies:
+- **Core**: Spring Boot 3.4.2, Java 21
+- **Persistence**: Spring Data JPA, Hibernate
+- **Batch Processing**: Spring Batch
+- **Databases**: MySQL, PostgreSQL, Oracle
+- **Utilities**: Lombok, MapStruct, SpringDoc (OpenAPI 3)
+- **Build**: Maven
 
-```bash
-mvn clean install
-```
+---
 
-### 3. Running the databases with Docker (Optional)
+## 🏁 Getting Started
 
-You can use the provided `docker-compose.yml` to set up database containers. Simply run:
+### Prerequisites
 
-```bash
-docker-compose up -d
-```
+- Java 21, Maven, Docker (optional).
+- Running instances of MySQL, PostgreSQL, and/or Oracle.
 
-### 4. Configure your databases
+### Local Setup
 
-In the `src/main/resources/application.yaml`, configure the database connection settings for your MySQL, PostgreSQL, and
-Oracle instances.
+1. **Clone the repository**:
+   ```bash  
+   git clone https://github.com/CodexParas/db-migrator.git  
+   cd db-migrator  
+   ```  
 
-### 5. Running the application
+2. **Install dependencies**:
+   ```bash  
+   mvn clean install  
+   ```  
 
-To run the application, use the following command:
+3. **Configure databases**:  
+   Update `src/main/resources/application.yaml` with your database credentials.
 
-```bash
-mvn spring-boot:run
-```
+4. **Run the application**:
+   ```bash  
+   mvn spring-boot:run  
+   ```  
 
-## Batch Jobs
+### Docker Setup (Optional)
 
-The application uses **Spring Batch** to handle the migration and data insertion operations. Batch jobs allow for
-efficient and transactional processing of large data sets.
+Start databases using Docker:
 
-### Migration Jobs
+```bash  
+docker-compose up -d  # Launches MySQL, PostgreSQL, and Oracle containers  
+```  
 
-There are several migration jobs configured to move data between different databases. These jobs can be executed through
-the REST API endpoints or can be triggered directly in the application.
+---
 
-- **Migrate to MySQL**: Migrates data from other databases to MySQL.
-- **Migrate to Oracle**: Migrates data from other databases to Oracle.
-- **Migrate to PostgreSQL**: Migrates data from other databases to PostgreSQL.
+## 📚 API Documentation
 
-The batch jobs run in the background to ensure efficient and error-free migration, with automatic transaction
-management.
+**Interactive Swagger UI**:  
+Access at `http://localhost:9121/api/swagger-ui.html` after starting the app.
 
-### Data Insertion Jobs
+### Key Endpoints
 
-Data insertion jobs are configured to populate demo data into the respective databases. These jobs are triggered by the
-respective `/data/insert` API endpoints. The job will generate the requested number of records and insert them into the
-chosen database.
+#### **1. Migrate Data**
 
-### Batch Job Configuration
+```http  
+POST /api/migrate/toMySql  
+Content-Type: application/json  
 
-Batch jobs are configured in the `src/main/java/com/paras/db_migrator/config/job` package. Each migration and data
-insertion job is configured with:
+{  
+  "source": "POSTGRES"  # [MYSQL, POSTGRES, ORACLE]  
+}  
+```  
 
-- **Job Parameters**: Parameters like database source, target, and record count.
-- **Job Steps**: Each job is divided into smaller steps (e.g., reading data, processing data, writing data).
-- **Job Listeners**: Listeners are used to capture job execution events (e.g., start, end, or failure).
+**Response**:
 
-You can modify the batch job configurations in the corresponding files within the `config/job` folder to suit your
-needs.
+```json  
+{
+  "status": "SUCCESS",
+  "message": "Data migrated",
+  "data": null
+}  
+```  
 
-## REST APIs
+#### **2. Insert Mock Data**
 
-The OpenAPI specification is available for viewing and interacting with the APIs. You can access it at:
+```http  
+POST /api/data/insert/mysql  
+Content-Type: application/json  
 
-```
-http://localhost:9121/api/swagger-ui.html
-```
+{  
+  "count": 1000  # Number of records to generate  
+}  
+```  
 
-This UI provides detailed documentation for all the available endpoints and allows you to test the APIs directly.
+**Response**:
 
-## License
+```json  
+{
+  "status": "SUCCESS",
+  "message": "Data inserted",
+  "data": null
+}  
+```  
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+---
+
+## 🔄 Workflow Details
+
+### Data Migration Flow
+
+```mermaid  
+sequenceDiagram  
+  User->>API: POST /migrate/toMySql {source: "POSTGRES"}  
+  API->>MigrationService: Trigger Job  
+  MigrationService->>Spring Batch: Run migrateToMysqlJob  
+  Spring Batch->>Source DB: Read data via DbDataSupplier  
+  Spring Batch->>Target DB: Write data via JPA Repository  
+  Spring Batch-->>User: Return success  
+```  
+
+**Steps**:
+
+1. **Reader**: Fetches data from the source DB (e.g., PostgreSQL).
+2. **Processor**: Pass-through (no transformation; extend for custom logic).
+3. **Writer**: Saves data to the target DB (e.g., MySQL) in chunks (100 records/transaction).
+
+---
+
+### Data Insertion Flow
+
+```mermaid  
+sequenceDiagram  
+  User->>API: POST /data/insert/mysql {count: 500}  
+  API->>DataService: Trigger Job  
+  DataService->>Spring Batch: Run MySqlDataInsertJob  
+  Spring Batch->>MockDataGenerator: Generate 500 records  
+  Spring Batch->>MySQL: Save data via JPA Repository  
+  Spring Batch-->>User: Return success  
+```  
+
+**Steps**:
+
+1. **Reader**: Generates mock data (e.g., names, emails) using `MockDataGenerator`.
+2. **Writer**: Inserts records into the target database.
+
+---
+
+## ⚙️ Configuration
+
+### Key `application.yaml` Settings
+
+```yaml  
+server:
+  port: 9121
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    mysql:
+      jdbcUrl: jdbc:mysql://localhost:3306/db_migrator
+      username: root
+      password: root
+  batch:
+    job.enabled: false       # Disable auto-startup of jobs  
+    jdbc.initialize-schema: ALWAYS  # Create batch tables on startup  
+```  
+
+### Tuning Batch Jobs
+
+- **Chunk Size**: Adjust in job configurations (e.g., `MigrateToMysql.java`):
+  ```java  
+  .<MySqlClientEntity, MySqlClientEntity>chunk(200, mySqlTransactionManager)  
+  ```  
+
+---
+
+## 🗺️ Roadmap
+
+- **MongoDB Support**: Migrate to/from MongoDB collections.
+- **Rollback Mechanism**: API-driven undo for migrations.
+- **Enhanced Monitoring**: Integrate Spring Actuator for job metrics.
+- **Error Handling**: Retry policies, dead-letter queues.
+- **Authentication**: Basic API key/JWT support.
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome!
+
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature/your-feature`).
+3. Add tests for new functionality.
+4. Submit a pull request with a detailed description.
+
+---
+
+## 📜 License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for details.  
