@@ -223,9 +223,3 @@ Contributions welcome!
 2. Create a feature branch (`git checkout -b feature/your-feature`).
 3. Add tests for new functionality.
 4. Submit a pull request with a detailed description.
-
----
-
-## 📜 License
-
-Distributed under the MIT License. See [LICENSE](LICENSE) for details.  
