@@ -27,17 +27,13 @@ public class DbDataSupplier {
 
     public List<MySqlClientEntity> getMySqlData(DbType source) {
         if(source.getValue().equalsIgnoreCase("postgres")) {
-            List<MySqlClientEntity> entities = postgresClientRepository.findAll()
+            return postgresClientRepository.findAll()
                                                                        .stream()
                                                                        .map(mapper::toMySql)
                                                                        .toList();
-            log.info("Entities: {}", entities);
-            return entities;
         }
         else if(source.getValue().equalsIgnoreCase("oracle")) {
-            List<MySqlClientEntity> entities = oracleClientRepository.findAll().stream().map(mapper::toMySql).toList();
-            log.info("Entities: {}", entities);
-            return entities;
+            return oracleClientRepository.findAll().stream().map(mapper::toMySql).toList();
 
         }
         return List.of();
