@@ -2,8 +2,8 @@ package com.paras.db_migrator.config.job.migrate;
 
 import com.paras.db_migrator.config.job.JobListener;
 import com.paras.db_migrator.constants.DbType;
-import com.paras.db_migrator.entity.oracle.OracleClientEntity;
-import com.paras.db_migrator.repository.oracle.OracleClientRepository;
+import com.paras.db_migrator.oracle.entity.OracleClientEntity;
+import com.paras.db_migrator.oracle.repository.OracleClientRepository;
 import com.paras.db_migrator.supplier.DbDataSupplier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;

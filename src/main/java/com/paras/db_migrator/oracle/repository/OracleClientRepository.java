@@ -1,6 +1,6 @@
-package com.paras.db_migrator.repository.oracle;
+package com.paras.db_migrator.oracle.repository;
 
-import com.paras.db_migrator.entity.oracle.OracleClientEntity;
+import com.paras.db_migrator.oracle.entity.OracleClientEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OracleClientRepository extends JpaRepository<OracleClientEntity, Long> {

@@ -1,4 +1,4 @@
-package com.paras.db_migrator.entity.mysql;
+package com.paras.db_migrator.postgres.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MySqlClientEntity {
+public class PostgresClientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,8 +1,8 @@
 package com.paras.db_migrator.mapper;
 
-import com.paras.db_migrator.entity.mysql.MySqlClientEntity;
-import com.paras.db_migrator.entity.oracle.OracleClientEntity;
-import com.paras.db_migrator.entity.postgres.PostgresClientEntity;
+import com.paras.db_migrator.mysql.entity.MySqlClientEntity;
+import com.paras.db_migrator.oracle.entity.OracleClientEntity;
+import com.paras.db_migrator.postgres.entity.PostgresClientEntity;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

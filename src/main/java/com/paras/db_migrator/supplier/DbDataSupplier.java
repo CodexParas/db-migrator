@@ -1,13 +1,13 @@
 package com.paras.db_migrator.supplier;
 
 import com.paras.db_migrator.constants.DbType;
-import com.paras.db_migrator.entity.mysql.MySqlClientEntity;
-import com.paras.db_migrator.entity.oracle.OracleClientEntity;
-import com.paras.db_migrator.entity.postgres.PostgresClientEntity;
+import com.paras.db_migrator.mysql.entity.MySqlClientEntity;
+import com.paras.db_migrator.oracle.entity.OracleClientEntity;
+import com.paras.db_migrator.postgres.entity.PostgresClientEntity;
 import com.paras.db_migrator.mapper.MigrationMapper;
-import com.paras.db_migrator.repository.mysql.MySqlClientRepository;
-import com.paras.db_migrator.repository.oracle.OracleClientRepository;
-import com.paras.db_migrator.repository.postgres.PostgresClientRepository;
+import com.paras.db_migrator.mysql.repository.MySqlClientRepository;
+import com.paras.db_migrator.oracle.repository.OracleClientRepository;
+import com.paras.db_migrator.postgres.repository.PostgresClientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

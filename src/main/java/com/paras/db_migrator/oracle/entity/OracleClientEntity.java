@@ -1,4 +1,4 @@
-package com.paras.db_migrator.entity.postgres;
+package com.paras.db_migrator.oracle.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,14 +6,14 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "client_data", indexes = {@Index(name = "idx_client_id", columnList = "id")})
+@Table(name = "client_data")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostgresClientEntity {
+public class OracleClientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

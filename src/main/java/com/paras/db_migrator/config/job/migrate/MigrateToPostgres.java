@@ -2,8 +2,8 @@ package com.paras.db_migrator.config.job.migrate;
 
 import com.paras.db_migrator.config.job.JobListener;
 import com.paras.db_migrator.constants.DbType;
-import com.paras.db_migrator.entity.postgres.PostgresClientEntity;
-import com.paras.db_migrator.repository.postgres.PostgresClientRepository;
+import com.paras.db_migrator.postgres.entity.PostgresClientEntity;
+import com.paras.db_migrator.postgres.repository.PostgresClientRepository;
 import com.paras.db_migrator.supplier.DbDataSupplier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;

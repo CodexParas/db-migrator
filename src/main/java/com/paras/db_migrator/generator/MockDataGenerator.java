@@ -1,8 +1,8 @@
 package com.paras.db_migrator.generator;
 
-import com.paras.db_migrator.entity.mysql.MySqlClientEntity;
-import com.paras.db_migrator.entity.oracle.OracleClientEntity;
-import com.paras.db_migrator.entity.postgres.PostgresClientEntity;
+import com.paras.db_migrator.mysql.entity.MySqlClientEntity;
+import com.paras.db_migrator.oracle.entity.OracleClientEntity;
+import com.paras.db_migrator.postgres.entity.PostgresClientEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

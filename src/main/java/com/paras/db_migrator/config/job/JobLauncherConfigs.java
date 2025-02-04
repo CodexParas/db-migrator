@@ -1,43 +1,45 @@
 package com.paras.db_migrator.config.job;
 
-import com.paras.db_migrator.supplier.BeanSupplier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.TaskExecutorJobLauncher;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
-import static com.paras.db_migrator.constants.BeanName.*;
-
 @Configuration
 @RequiredArgsConstructor
 public class JobLauncherConfigs {
 
-    private final BeanSupplier beanSupplier;
-
     @Bean
     @Primary
-    public JobLauncher mySqlJobLauncher() {
+    public JobLauncher mySqlJobLauncher(
+            JobRepository mySqlJobRepository
+                                       ) {
         TaskExecutorJobLauncher jobLauncher = new TaskExecutorJobLauncher();
-        jobLauncher.setJobRepository(beanSupplier.getJobRepositoryBean(MYSQL_JOB_REPOSITORY));
+        jobLauncher.setJobRepository(mySqlJobRepository);
         jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
         return jobLauncher;
     }
 
     @Bean
-    public JobLauncher postgresJobLauncher() {
+    public JobLauncher postgresJobLauncher(
+            JobRepository postgreSqlJobRepository
+                                          ) {
         TaskExecutorJobLauncher jobLauncher = new TaskExecutorJobLauncher();
-        jobLauncher.setJobRepository(beanSupplier.getJobRepositoryBean(POSTGRES_JOB_REPOSITORY));
+        jobLauncher.setJobRepository(postgreSqlJobRepository);
         jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
         return jobLauncher;
     }
 
     @Bean
-    public JobLauncher oracleJobLauncher() {
+    public JobLauncher oracleJobLauncher(
+            JobRepository oracleJobRepository
+                                        ) {
         TaskExecutorJobLauncher jobLauncher = new TaskExecutorJobLauncher();
-        jobLauncher.setJobRepository(beanSupplier.getJobRepositoryBean(ORACLE_JOB_REPOSITORY));
+        jobLauncher.setJobRepository(oracleJobRepository);
         jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
         return jobLauncher;
     }

@@ -2,8 +2,8 @@ package com.paras.db_migrator.config.job.migrate;
 
 import com.paras.db_migrator.config.job.JobListener;
 import com.paras.db_migrator.constants.DbType;
-import com.paras.db_migrator.entity.mysql.MySqlClientEntity;
-import com.paras.db_migrator.repository.mysql.MySqlClientRepository;
+import com.paras.db_migrator.mysql.entity.MySqlClientEntity;
+import com.paras.db_migrator.mysql.repository.MySqlClientRepository;
 import com.paras.db_migrator.supplier.DbDataSupplier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;

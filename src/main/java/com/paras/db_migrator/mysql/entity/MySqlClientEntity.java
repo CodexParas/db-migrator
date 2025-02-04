@@ -1,4 +1,4 @@
-package com.paras.db_migrator.entity.oracle;
+package com.paras.db_migrator.mysql.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,14 +6,14 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "client_data")
+@Table(name = "client_data", indexes = {@Index(name = "idx_client_id", columnList = "id")})
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OracleClientEntity {
+public class MySqlClientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
